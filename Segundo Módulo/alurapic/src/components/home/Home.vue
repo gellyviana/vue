@@ -47,8 +47,8 @@ export default {
 
    methods: {
         remover(foto){
-          this.$http
-          .delete(`v1/fotos/${foto._id}`)
+          this.service
+          .apaga(foto._id)
           .then(
             () => {
               let indice = this.fotos.indexOf(foto);
@@ -76,9 +76,10 @@ export default {
 
   created(){
 
-    this.$http
-      .get('v1/fotos')
-      .then(res => res.json())
+    this.service = new FotoService(this.$resource);
+
+    this.service
+      .lista()
       .then(fotos => this.fotos = fotos, err => console.log(err));
 
   }
